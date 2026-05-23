@@ -14,7 +14,9 @@ export default async function OverviewPage() {
       <div>
         <h1 className="text-2xl font-bold text-neutral-900">Overview</h1>
         <p className="mt-4 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {error ?? "Failed to load"} — check API_URL and ADMIN_API_KEY match the backend.
+          {error ?? "Failed to load"} — ensure the backend is running on API_URL and ADMIN_API_KEY
+          matches <code className="rounded bg-red-100 px-1">agdil-backend/.env</code>, then restart
+          the API.
         </p>
       </div>
     );
@@ -27,6 +29,8 @@ export default async function OverviewPage() {
     { label: "Orders", value: stats.orders },
     { label: "Pending orders", value: stats.pendingOrders },
     { label: "Join submissions", value: stats.joinSubmissions },
+    { label: "Learning resources", value: stats.learningResources },
+    { label: "Full courses", value: stats.fullCourses },
   ];
 
   return (

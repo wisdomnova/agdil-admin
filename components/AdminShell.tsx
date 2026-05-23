@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 const nav = [
   { href: "/", label: "Overview" },
+  { href: "/learning", label: "Learning" },
   { href: "/users", label: "Users" },
   { href: "/orders", label: "Orders" },
   { href: "/join", label: "Join submissions" },
@@ -21,7 +22,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-full">
+    <div className="flex min-h-screen flex-1">
       <aside className="flex w-56 shrink-0 flex-col border-r border-neutral-200 bg-white">
         <div className="border-b border-neutral-200 px-5 py-5">
           <p className="text-lg font-bold text-green-700">AGDIL Admin</p>

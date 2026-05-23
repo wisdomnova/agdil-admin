@@ -1,29 +1,4 @@
-const API_URL = process.env.API_URL ?? "http://localhost:3001";
-
-function adminKey(): string {
-  const key = process.env.ADMIN_API_KEY;
-  if (!key) throw new Error("ADMIN_API_KEY is not configured");
-  return key;
-}
-
-async function adminFetch<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, {
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      "X-Admin-Api-Key": adminKey(),
-      ...(init?.headers ?? {}),
-    },
-    cache: "no-store",
-  });
-
-  const text = await res.text();
-  const data = text ? (JSON.parse(text) as T & { ok?: boolean; error?: string }) : ({} as T);
-  if (!res.ok || (data as { ok?: boolean }).ok === false) {
-    throw new Error((data as { error?: string }).error ?? `Request failed (${res.status})`);
-  }
-  return data;
-}
+import { adminFetch } from "./admin-api-core";
 
 export type AdminStats = {
   users: number;
@@ -32,6 +7,8 @@ export type AdminStats = {
   orders: number;
   pendingOrders: number;
   joinSubmissions: number;
+  learningResources: number;
+  fullCourses: number;
 };
 
 export async function fetchAdminStats(): Promise<AdminStats> {
