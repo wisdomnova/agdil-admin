@@ -38,17 +38,47 @@ export type AdminOrder = {
   orderId: string;
   status: string;
   total: number;
+  subtotal: number;
   currency: string;
   itemCount: number;
   buyerEmail: string;
   buyerName: string;
+  buyerPhone: string;
   shippingName: string;
+  shippingPhone: string;
+  shippingAddress: string;
+  notes: string;
   createdAt: string;
 };
 
-export async function fetchAdminOrders(): Promise<AdminOrder[]> {
-  const data = await adminFetch<{ ok: true; orders: AdminOrder[] }>("/api/admin/orders");
+export type AdminOrderItem = {
+  id: string;
+  productSource: string;
+  productSlug: string;
+  storeSlug: string;
+  productName: string;
+  quantity: number;
+  unitPrice: number;
+  lineTotal: number;
+};
+
+export type AdminOrderDetail = AdminOrder & {
+  items: AdminOrderItem[];
+};
+
+export type OrderStatus = "pending" | "confirmed" | "completed" | "cancelled";
+
+export async function fetchAdminOrders(status?: OrderStatus): Promise<AdminOrder[]> {
+  const qs = status ? `?status=${encodeURIComponent(status)}` : "";
+  const data = await adminFetch<{ ok: true; orders: AdminOrder[] }>(`/api/admin/orders${qs}`);
   return data.orders;
+}
+
+export async function fetchAdminOrder(orderId: string): Promise<AdminOrderDetail> {
+  const data = await adminFetch<{ ok: true; order: AdminOrderDetail }>(
+    `/api/admin/orders/${encodeURIComponent(orderId)}`,
+  );
+  return data.order;
 }
 
 export async function updateAdminOrderStatus(orderId: string, status: string): Promise<void> {
