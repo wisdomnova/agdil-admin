@@ -31,6 +31,7 @@ export default async function OverviewPage() {
     { label: "Join submissions", value: stats.joinSubmissions },
     { label: "Learning resources", value: stats.learningResources },
     { label: "Full courses", value: stats.fullCourses },
+    { label: "Events", value: stats.events },
   ];
 
   return (

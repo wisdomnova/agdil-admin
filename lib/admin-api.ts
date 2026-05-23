@@ -9,6 +9,7 @@ export type AdminStats = {
   joinSubmissions: number;
   learningResources: number;
   fullCourses: number;
+  events: number;
 };
 
 export async function fetchAdminStats(): Promise<AdminStats> {
